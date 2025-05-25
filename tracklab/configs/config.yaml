@@ -4,14 +4,14 @@
 # to create the final config file. This item *must* be
 # the first element in the file.
 defaults:
-  - dataset: video
-  - eval: trackeval
-  - engine: offline
-  - visualization: tracking
-  - modules/bbox_detector: yolo_ultralytics
-  - modules/pose_estimator: yolo_ultralytics-pose
-  - modules/reid: kpr
-  - modules/track: oc_sort
+  - dataset: video       # this is reading the video.yaml inside the dataset folder
+  - eval: trackeval     # since we are not evaluating for a new video (without GT), it is the same
+  - engine: offline     # This MUST BE OFFLINE, 
+  - visualization: bbox   # TODO: inspect another options. For gamestate, I would need to skip the GT
+  - modules/bbox_detector: yolo_ultralytics       # TODO: Try another ones, we could just propose to integrate a new one
+  - modules/pose_estimator: yolo_ultralytics-pose  
+  - modules/reid: kpr         # FIXME: kpr and bpbreid are not working
+  - modules/track: oc_sort        # TODO: Try another ones: strong_sort
   - _self_
 
 # Pipeline definition:
@@ -19,11 +19,12 @@ defaults:
 # - If loading a tracking state from disk, remove modules whose outputs are already provided in the loaded state
 # Use 'pipeline: []' for an empty pipeline
 pipeline:
-  #- bbox_detector
-  - pose_estimator
-  #- reid
+  - bbox_detector
+  # - pose_estimator
+  # - reid          # FIXME: there is a problem inserting whichever moduel
   - track
 
+  
 num_cores: 4
 
 # Logging
@@ -43,9 +44,9 @@ state:
   load_from_groundtruth: false
 
 # Flag parameters
-test_tracking: true
-eval_tracking: true
-use_rich: true
+test_tracking: true   # THIS HAS TO BE TRUE TO track itself
+eval_tracking: false  # This must be set to false if we do not have GT
+use_rich: true      # Use rich progress bars
 
 # configure Hydra to use the current working directory
 # and set up the output directory according to experiment_name

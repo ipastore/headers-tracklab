@@ -4,6 +4,8 @@ cfg:
   # models available :
   # yolo11n.pt yolo11s.pt yolo11m.pt yolo11l.pt yolo11x.pt
   # those models will be downloaded automatically if not found in the path
-  path_to_checkpoint: "${model_dir}/yolo/yolo11m.pt"
+  # path_to_checkpoint: "${model_dir}/yolo/yolo11m.pt"
+  # path_to_checkpoint: "${model_dir}/yolo/yolo11m_fine_tuned.pt"
+  path_to_checkpoint: "${model_dir}/yolo/yolov8m.pt"
 
   min_confidence: 0.4

@@ -1,4 +1,4 @@
-_target_: tracklab.wrappers.BPBReId
+_target_: tracklab.wrappers.reid.bpbreid_api.BPBReId
 
 defaults:
   - dataset: default
